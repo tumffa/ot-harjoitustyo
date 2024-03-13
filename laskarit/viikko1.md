@@ -1,0 +1,1 @@
+komentorivi ja versionhallinta hallussa
