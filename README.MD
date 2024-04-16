@@ -5,3 +5,4 @@ Laskinsovellus, jolla pystyy suorittamaan matemaattisia lausekkeita komentorivil
 - [Vaatimusmäärittely](./dokumentaatio/vaatimusmaarittely.md)
 - [Changelog](./dokumentaatio/changelog.md)
 - [Tuntikirjanpito](./dokumentaatio/tyoaikakirjanpito.md)
+- [Arkkitehtuuri](./dokumentaatio/arkkitehtuuri.md)
