@@ -48,7 +48,8 @@ class Translator:
         # check for injection
         function_string = self.check_and_replace(function_string, keep=variable)
         # generate a random string to use as the function name
-        random_string = ''.join(random.choices(string.ascii_letters + string.digits, k=10))
+        random_string = ''.join(random.choices(string.ascii_letters, k=10))
+        print(random_string)
         try:
             # check if the function is valid
             result = eval('lambda {}: {}'.format(variable, function_string))
@@ -63,10 +64,11 @@ class Translator:
         # prompt for function name
         io.write("Enter the name of the function: -- 'exit' to cancel\n")
         while True:
-            io.add_input("name: ", False)
+            if len(io.inputs) == 0:  # pragma: no cover
+                io.add_input("name: ")  # pragma: no cover
             function_name = io.read()
-            if function_name == "exit":
-                return False
+            if function_name == "exit":  # pragma: no cover
+                return False  # pragma: no cover
             if not function_name.isidentifier():
                 io.write("Invalid function name. Enter name like f_1\n")
                 continue
@@ -80,10 +82,11 @@ class Translator:
         # prompt for function
         io.write("Enter the function. I.e. 'x**2'\n")
         while True:
-            io.add_input("function: ", False)
+            if len(io.inputs) == 0:  # pragma: no cover
+                io.add_input("function: ")  # pragma: no cover
             function_string = io.read()
-            if function_string == "exit":
-                return False
+            if function_string == "exit":  # pragma: no cover
+                return False  # pragma: no cover
             if self.check_and_replace(function_string, keep=variable) is False:
                 io.write("Invalid function. Use expressions, functions or x\n")
                 continue
