@@ -2,6 +2,6 @@
 
 Laskinsovellus, jolla pystyy suorittamaan matemaattisia lausekkeita komentoriviltä käsin.
 
-- [Vaatimusmäärittely](https://github.com/tumffa/ot-harjoitustyo/blob/e07c26b801b1e79d6951e852fcd9063390c40aa4/dokumentaatio/vaatimusmaarittely.md)
-- [Changelog](https://github.com/tumffa/ot-harjoitustyo/blob/9bec4a9f6e597d721854970cb8fc12be6e859971/dokumentaatio/changelog.md)
-- [Tuntikirjanpito](https://github.com/tumffa/ot-harjoitustyo/blob/83adca18b0af5f7a69f4ee5543c5d78d1682bd17/dokumentaatio/tyoaikakirjanpito.md)
+- [Vaatimusmäärittely](./dokumentaatio/vaatimusmaarittely.md)
+- [Changelog](./dokumentaatio/changelog.md)
+- [Tuntikirjanpito](./dokumentaatio/tyoaikakirjanpito.md)
