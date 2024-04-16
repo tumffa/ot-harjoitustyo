@@ -1,6 +1,6 @@
 import math
 import random
-import string
+import string as s
 
 class Translator:
     def __init__(self):
@@ -18,11 +18,13 @@ class Translator:
             return False
         # evaluate result
         try:
-            result = eval(string)
+            result = eval(string) # pylint: disable=eval-used
+            # injection is avoided as only self.functions or user created functions
+            # (which are stored as a random 10-char string) are allowed
         except:
             return False
         return result
-    
+
     def check_and_replace(self, string, keep=None):
         # check for injection and replace given functions with actual functions
         i = 0
@@ -42,17 +44,16 @@ class Translator:
             else:
                 i += 1
         return string
-    
+
     def add_function(self, function_name, function_string, variable):
         function_string = function_string.replace("^", "**")
         # check for injection
         function_string = self.check_and_replace(function_string, keep=variable)
         # generate a random string to use as the function name
-        random_string = ''.join(random.choices(string.ascii_letters, k=10))
-        print(random_string)
+        random_string = ''.join(random.choices(s.ascii_letters, k=10))
         try:
             # check if the function is valid
-            result = eval('lambda {}: {}'.format(variable, function_string))
+            result = eval(f'lambda {variable}: {function_string}') # pylint: disable=eval-used
         except:
             return False
         # save the actual function with random identifier
@@ -76,9 +77,9 @@ class Translator:
                 io.write("Function name already exists. Enter a new name\n")
                 continue
             break
-        
+
         variable = 'x'
-        
+
         # prompt for function
         io.write("Enter the function. I.e. 'x**2'\n")
         while True:
@@ -91,9 +92,7 @@ class Translator:
                 io.write("Invalid function. Use expressions, functions or x\n")
                 continue
             result = self.add_function(function_name, function_string, variable)
-            if result == True:
+            if result is True:
                 io.write(f"Function '{function_name}' added successfully!\n")
                 return
-            elif result == False:
-                io.write(f"Invalid expression\n")
-                continue
+            io.write("Invalid expression\n")

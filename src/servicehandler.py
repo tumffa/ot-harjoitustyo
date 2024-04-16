@@ -7,7 +7,8 @@ class ServiceHandler:
         self.info()
         while True:
             self.io.add_input("Command/expression: ", False)
-            input = self.io.read()
+            input = self.io.read() # pylint: disable=redefined-builtin
+            # built-in input is redefined to allow for easier testing
             if input == "exit":
                 break
             if input == "af":
