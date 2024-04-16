@@ -1,6 +1,7 @@
 import unittest
 from services.translator import Translator
 
+
 class TestTranslator(unittest.TestCase):
     def setUp(self):
         self.translator = Translator()
