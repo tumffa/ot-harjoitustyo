@@ -6,8 +6,8 @@ Sovelluksella käyttäjä pystyy tekemään erilaisia laskutoimituksia ja myös 
 
 ## Suunnitellut toiminnallisuudet
 
-- Erilaisten peruslaskutoimitusten suorittaminen
-- Funktioiden tallentaminen
+- **(tehty)** Erilaisten peruslaskutoimitusten suorittaminen
+- **(tehty)** Funktioiden tallentaminen
 - Muuttujien tallentaminen
 - Erityisemmät operaatiot, kuten derivointi tai yhtälöiden ratkaisu
 
