@@ -2,5 +2,7 @@
 
 | päivä | aika | mitä tein  |
 | :----:|:-----| :-----|
-| 20.3 | 0.5    | Alustava määrittelydokumentti |
-| 8.4  | 2      | Sovelluksen perusta, taskit, 3kpl testejä
+| 20.3 | 0.5 h   | Alustava määrittelydokumentti |
+| 8.4  | 2 h     | Sovelluksen perusta, taskit, 3kpl testejä
+| 16.4 | 4.5 h   | Funktioiden lisääminen, testejä, pylint 
+|      |Yhteensä 7 h 
