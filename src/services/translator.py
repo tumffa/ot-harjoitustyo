@@ -5,10 +5,17 @@ import string as s
 class Translator:
     def __init__(self):
         self.functions = {
-            'abs': 'abs',
-            'sqrt': 'math.sqrt',
-            'exp': 'math.exp'
+            'abs': ('abs', 'abs(x)'),
+            'sqrt': ('math.sqrt', 'math.sqrt(x)'),
+            'exp': ('math.exp', 'math.exp(x)'),
+            'sin': ('math.sin', 'math.sin(x)'),
+            'cos': ('math.cos', 'math.cos(x)')
             }
+        
+        self.variables = {
+            'e': ('math.e', 'math.e'),
+            'pi': ('math.pi', 'math.pi')
+        }
 
     def calculate(self, string):
         string = string.replace("^", "**")
@@ -37,10 +44,15 @@ class Translator:
                 if word == keep:
                     i = j
                     continue
-                if word not in self.functions:
+                type = None
+                if word in self.functions:
+                    type = 'function'
+                elif word in self.variables:
+                    type = 'variable'
+                if type is None:
                     return False
-                string = string[:i] + self.functions[word] + string[j:]
-                i += len(self.functions[word])
+                string = f"{string[:i]}{self.functions[word][0] if type == 'function' else self.variables[word][0]}{string[j:]}"
+                i += len(self.functions[word][0]) if type == 'function' else len(self.variables[word][0])
             else:
                 i += 1
         return string
@@ -48,22 +60,34 @@ class Translator:
     def add_function(self, function_name, function_string, variable):
         function_string = function_string.replace("^", "**")
         # check for injection
-        function_string = self.check_and_replace(function_string, keep=variable)
+        function_string2 = self.check_and_replace(function_string, keep=variable)
         # generate a random string to use as the function name
         random_string = ''.join(random.choices(s.ascii_letters, k=10))
         try:
             # check if the function is valid
-            result = eval(f'lambda {variable}: {function_string}') # pylint: disable=eval-used
+            result = eval(f'lambda {variable}: {function_string2}') # pylint: disable=eval-used
         except:
             return False
         # save the actual function with random identifier
         globals()[random_string] = result
-        self.functions[function_name] = random_string
+        self.functions[function_name] = (random_string, function_string)
+        return True
+
+    def add_variable(self, variable_name, variable_string):
+        variable_string = variable_string.replace("^", "**")
+        # check for injection
+        variable_string2 = self.check_and_replace(variable_string)
+        # check if the variable is valid
+        try:
+            result = eval(variable_string2) # pylint: disable=eval-used
+        except:
+            return False
+        self.variables[variable_name] = (str(result), variable_string)
         return True
 
     def add_function_prompt(self, io):
         # prompt for function name
-        io.write("Enter the name of the function: -- 'exit' to cancel\n")
+        io.write("\nEnter the name of the function: -- 'exit' to cancel")
         while True:
             if len(io.inputs) == 0:  # pragma: no cover
                 io.add_input("name: ")  # pragma: no cover
@@ -73,15 +97,15 @@ class Translator:
             if not function_name.isidentifier():
                 io.write("Invalid function name. Enter name like f_1\n")
                 continue
-            if function_name in self.functions:
-                io.write("Function name already exists. Enter a new name\n")
+            if function_name in self.functions or function_name in self.variables or function_name in ['af', 'av', 'variables', 'functions']:
+                io.write("This name is already in use. Enter a new name\n")
                 continue
             break
 
         variable = 'x'
 
         # prompt for function
-        io.write("Enter the function. I.e. 'x**2'\n")
+        io.write("\nEnter the function. I.e. 'x**2'")
         while True:
             if len(io.inputs) == 0:  # pragma: no cover
                 io.add_input("function: ")  # pragma: no cover
@@ -89,10 +113,56 @@ class Translator:
             if function_string == "exit":  # pragma: no cover
                 return False  # pragma: no cover
             if self.check_and_replace(function_string, keep=variable) is False:
-                io.write("Invalid function. Use expressions, functions or x\n")
+                io.write("Invalid function. Use expressions, functions, stored variables or 'x'\n")
                 continue
             result = self.add_function(function_name, function_string, variable)
             if result is True:
-                io.write(f"Function '{function_name}' added successfully!\n")
+                io.write(f"\nFunction '{function_name}' added successfully!\n")
                 return
             io.write("Invalid expression\n")
+
+    def add_variable_prompt(self, io):
+        # prompt for variable name
+        io.write("\nEnter the name of the variable: -- 'exit' to cancel")
+        while True:
+            if len(io.inputs) == 0:  # pragma: no cover
+                io.add_input("name: ")
+            variable_name = io.read()
+            if variable_name == "exit": # pragma: no cover
+                return False # pragma: no cover
+            if not variable_name.isidentifier():
+                io.write("Invalid variable name. Enter name like 'var'\n")
+                continue
+            if variable_name in self.variables or variable_name in self.functions or variable_name in ['af', 'av', 'variables', 'functions']:
+                io.write("This name is already in use. Enter a new name\n")
+                continue
+            break
+
+        # prompt for variable
+        io.write("\nEnter the variable. I.e. '2 + e^2 + f(5)'")
+        while True:
+            if len(io.inputs) == 0: # pragma: no cover
+                io.add_input("variable: ") # pragma: no cover
+            variable_string = io.read()
+            if variable_string == "exit":
+                return False
+            if self.check_and_replace(variable_string) is False:
+                io.write("Invalid variable. Use expressions, variables or functions\n")
+                continue
+            result = self.add_variable(variable_name, variable_string)
+            if result is True:
+                io.write(f"\nVariable '{variable_name}' added successfully!\n")
+                return
+            io.write("Invalid expression\n")
+
+    def print_functions(self, io):
+        io.write("\n")
+        for name, value in self.functions.items():
+            io.write(f"   {name}: {value[1]}")
+        io.write("\n")
+    
+    def print_variables(self, io):
+        io.write("\n")
+        for name, value in self.variables.items():
+            io.write(f"   {name}: {value[1]}")
+        io.write("\n")

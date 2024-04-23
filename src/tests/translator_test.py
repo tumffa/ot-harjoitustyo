@@ -47,12 +47,12 @@ class TestTranslator(unittest.TestCase):
         io = ConsoleIO(["f", "exit"])
         self.translator.add_function_prompt(io)
         self.assertIn(
-            "Function name already exists. Enter a new name\n",
+            "This name is already in use. Enter a new name\n",
             io.outputs)
         
     def test_add_function_prompt_with_invalid_function(self):
         io = ConsoleIO(["j", "2a", "exit"])
         self.translator.add_function_prompt(io)
         self.assertIn(
-            "Invalid function. Use expressions, functions or x\n",
+            "Invalid function. Use expressions, functions, stored variables or 'x'\n",
             io.outputs)

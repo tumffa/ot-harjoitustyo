@@ -9,6 +9,5 @@ def main():
     service_handler = ServiceHandler(io, translator)
     service_handler.run()
 
-
 if __name__ == "__main__":
     main()
