@@ -10,3 +10,11 @@
 - Lisätty perusfunktiot abs(), sqrt(), exp()
 - Lisätty mahdollisuus tallentaa ja laskea omia funktiota
 - Lähes 100% testikattavuus Translator-luokalle
+
+## Viikko 5
+- Lisätty funktiot cos(x) ja sin(x)
+- Lisätty muuttujat e ja pi
+- Lisätty mahdollisuus tallentaa muuttujiin arvoja
+- Lisätty mahdollisuus listata tallennetut funktiot ja muuttujat
+- Pieniä parannuksia
+- Translator-luokan testikattavuus 96%
