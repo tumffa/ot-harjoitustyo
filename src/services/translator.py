@@ -38,9 +38,9 @@ class Translator:
         # check for injection and replace given functions with actual functions
         i = 0
         while i < len(string):
-            if string[i].isalpha():
+            if string[i].isalpha() or string[i] == '_':
                 j = i
-                while j < len(string) and string[j].isalpha():
+                while j < len(string) and string[i:j+1].isidentifier():
                     j += 1
                 word = string[i:j]
                 if word == keep:

@@ -7,6 +7,7 @@ class TestTranslator(unittest.TestCase):
         self.translator = Translator()
         self.translator.add_function("f", "x + 2", "x")
         self.translator.add_function("g", "x**2", "x")
+        self.translator.add_variable("var", "5")
         
     def test_calculate_with_correct_operators(self):
         expression = "(((2 + 2 + 6) * (1/5))^2)^2"
@@ -56,3 +57,39 @@ class TestTranslator(unittest.TestCase):
         self.assertIn(
             "Invalid function. Use expressions, functions, stored variables or 'x'\n",
             io.outputs)
+        
+    def test_add_variable_with_invalid_expression(self):
+        io = ConsoleIO(["var2", "2_2", "exit"])
+        self.translator.add_variable_prompt(io)
+        self.assertIn(
+            "Invalid variable. Use expressions, variables or functions\n",
+            io.outputs)
+        
+    def test_add_variable_prompt_with_bad_identifier(self):
+        io = ConsoleIO(["f-1", "exit"])
+        self.translator.add_variable_prompt(io)
+        self.assertIn(
+            "Invalid variable name. Enter name like 'var'\n",
+            io.outputs)
+        
+    def test_add_variable_prompt_with_existing_name(self):
+        io = ConsoleIO(["var", "exit"])
+        self.translator.add_variable_prompt(io)
+        self.assertIn(
+            "This name is already in use. Enter a new name\n",
+            io.outputs)
+        
+    def test_add_variable_prompt_with_valid_input(self):
+        io = ConsoleIO(["var2", "3*g(2)-e^0", "exit"])
+        self.translator.add_variable_prompt(io)
+        self.assertEqual(self.translator.calculate("var2"), 11)
+
+    def test_print_variables(self):
+        io = ConsoleIO()
+        self.translator.print_variables(io)
+        self.assertIn(f"   var: 5", io.outputs)
+
+    def test_print_functions(self):
+        io = ConsoleIO()
+        self.translator.print_functions(io)
+        self.assertIn(f"   f: x + 2", io.outputs)
