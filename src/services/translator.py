@@ -1,4 +1,5 @@
-import math
+import math # pylint: disable=unused-import
+# math is used when using eval() on strings
 import random
 import string as s
 
@@ -13,7 +14,7 @@ class Translator:
             'sin': ('math.sin', 'math.sin(x)'),
             'cos': ('math.cos', 'math.cos(x)')
             }
-        
+
         self.variables = {
             'e': ('math.e', 'math.e'),
             'pi': ('math.pi', 'math.pi')
@@ -46,15 +47,16 @@ class Translator:
                 if word == keep:
                     i = j
                     continue
-                type = None
                 if word in self.functions:
-                    type = 'function'
+                    replacement = self.functions[word][0]
+                    increment = len(self.functions[word][0])
                 elif word in self.variables:
-                    type = 'variable'
-                if type is None:
+                    replacement = self.variables[word][0]
+                    increment = len(self.variables[word][0])
+                else:
                     return False
-                string = f"{string[:i]}{self.functions[word][0] if type == 'function' else self.variables[word][0]}{string[j:]}"
-                i += len(self.functions[word][0]) if type == 'function' else len(self.variables[word][0])
+                string = f"{string[:i]}{replacement}{string[j:]}"
+                i += increment
             else:
                 i += 1
         return string
@@ -89,7 +91,7 @@ class Translator:
 
     def add_function_prompt(self, io):
         # prompt for function name
-        io.write("\nEnter the name of the function: -- 'exit' to cancel")
+        io.write("\nEnter the name of the function, i.e. 'f_1' -- 'exit' to cancel")
         while True:
             if len(io.inputs) == 0:  # pragma: no cover
                 io.add_input("name: ")  # pragma: no cover
@@ -99,7 +101,8 @@ class Translator:
             if not function_name.isidentifier():
                 io.write("Invalid function name. Enter name like f_1\n")
                 continue
-            if function_name in self.functions or function_name in self.variables or function_name in ['af', 'av', 'variables', 'functions']:
+            taken = self.check_available(function_name)
+            if taken is False:
                 io.write("This name is already in use. Enter a new name\n")
                 continue
             break
@@ -120,7 +123,7 @@ class Translator:
             result = self.add_function(function_name, function_string, variable)
             if result is True:
                 io.write(f"\nFunction '{function_name}' added successfully!\n")
-                return
+                return True
             io.write("Invalid expression\n")
 
     def add_variable_prompt(self, io):
@@ -135,7 +138,8 @@ class Translator:
             if not variable_name.isidentifier():
                 io.write("Invalid variable name. Enter name like 'var'\n")
                 continue
-            if variable_name in self.variables or variable_name in self.functions or variable_name in ['af', 'av', 'variables', 'functions']:
+            taken = self.check_available(variable_name)
+            if taken is False:
                 io.write("This name is already in use. Enter a new name\n")
                 continue
             break
@@ -154,17 +158,22 @@ class Translator:
             result = self.add_variable(variable_name, variable_string)
             if result is True:
                 io.write(f"\nVariable '{variable_name}' added successfully!\n")
-                return
+                return True
             io.write("Invalid expression\n")
+
 
     def print_functions(self, io):
         io.write("\n")
         for name, value in self.functions.items():
-            io.write(f"   {name}: {value[1]}")
+            io.write(f"   {name}(x): {value[1]}")
         io.write("\n")
-    
+
     def print_variables(self, io):
         io.write("\n")
         for name, value in self.variables.items():
             io.write(f"   {name}: {value[1]}")
         io.write("\n")
+
+    def check_available(self, name):
+        taken_names = [self.functions, self.variables, ['af', 'av', 'variables', 'functions']]
+        return not any(name in names for names in taken_names)

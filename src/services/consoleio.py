@@ -1,5 +1,7 @@
 class ConsoleIO:
-    def __init__(self, inputs=[]):
+    def __init__(self, inputs=None):
+        if inputs is None:
+            inputs = []
         self.inputs = inputs
         self.outputs = []
 
