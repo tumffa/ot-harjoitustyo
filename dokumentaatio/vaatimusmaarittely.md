@@ -15,4 +15,3 @@ Sovelluksella käyttäjä pystyy tekemään erilaisia laskutoimituksia ja myös 
 
 - Kuvaajien tuottaminen
 - Funktioiden yhdistäminen
-- Komentorivi
