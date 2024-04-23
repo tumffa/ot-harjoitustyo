@@ -16,7 +16,7 @@ Sinulla tulee olla asennettuna
 
 Lataa [uusin release](https://github.com/tumffa/ot-harjoitustyo/releases/tag/viikko5) ja pura tiedosto
 
-Navigoi projektin juurihakemistoon ja suorita
+Navigoi projektin juurihakemistoon ja suorita komento
 >poetry install
 
 Sovelluksen voi käynnistää komennolla
