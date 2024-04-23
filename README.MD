@@ -11,6 +11,7 @@ Laskinsovellus, jolla pystyy suorittamaan matemaattisia lausekkeita komentorivil
 
 Sinulla tulee olla asennettuna
 >poetry
+>
 >python "^3.8"
 
 Lataa [uusin release](https://github.com/tumffa/ot-harjoitustyo/releases/tag/viikko5) ja pura tiedosto
