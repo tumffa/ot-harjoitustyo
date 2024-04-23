@@ -4,6 +4,8 @@ import string as s
 
 class Translator:
     def __init__(self):
+        # first value is what is evaluated in code
+        # second value is user input / what is displayed with print
         self.functions = {
             'abs': ('abs', 'abs(x)'),
             'sqrt': ('math.sqrt', 'math.sqrt(x)'),
@@ -77,8 +79,8 @@ class Translator:
         variable_string = variable_string.replace("^", "**")
         # check for injection
         variable_string2 = self.check_and_replace(variable_string)
-        # check if the variable is valid
         try:
+            # check if the variable is valid
             result = eval(variable_string2) # pylint: disable=eval-used
         except:
             return False
