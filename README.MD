@@ -17,18 +17,28 @@ Sinulla tulee olla asennettuna
 Lataa [uusin release](https://github.com/tumffa/ot-harjoitustyo/releases/tag/viikko5) ja pura tiedosto
 
 Navigoi projektin juurihakemistoon ja suorita komento
->poetry install
+```shell
+poetry install
+```
 
 ## Tasks-komennot
 
 Sovelluksen voi käynnistää komennolla
->poetry run invoke start
+```shell
+poetry run invoke start
+```
 
 Yksikkötestit voi suorittaa komennolla
->poetry run invoke pytest
+```shell
+poetry run invoke pytest
+```
 
 Testikattavuusraportin saa komennolla
->poetry run invoke coverage-report
+```shell
+poetry run invoke coverage-report
+```
 
 Pylint-testit voi suorittaa komennolla
->poetry run invoke lint
+```shell
+poetry run invoke lint
+```
