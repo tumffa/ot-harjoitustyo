@@ -8,6 +8,10 @@ Laskinsovellus, jolla pystyy suorittamaan matemaattisia lausekkeita komentorivil
 - [Arkkitehtuuri](./dokumentaatio/arkkitehtuuri.md)
 - [Käyttöohje](./dokumentaatio/kayttoohje.md)
 
+## Releaset
+[Viikko 6](https://github.com/tumffa/ot-harjoitustyo/releases/tag/viikko6)
+[Viikko 5](https://github.com/tumffa/ot-harjoitustyo/releases/tag/viikko5)
+
 ## Asennusohjeet
 
 Sinulla tulee olla asennettuna
