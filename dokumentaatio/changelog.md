@@ -18,3 +18,7 @@
 - Lisätty mahdollisuus listata tallennetut funktiot ja muuttujat
 - Pieniä parannuksia
 - Translator-luokan testikattavuus 96%
+
+## Viikko 6
+- Lisätty mahdollisuus ratkaista yksinkertaisia yhtälöjä
+- Docstring-kommentit
