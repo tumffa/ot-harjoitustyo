@@ -9,9 +9,10 @@ Sovelluksella käyttäjä pystyy tekemään erilaisia laskutoimituksia ja myös 
 - **(tehty)** Erilaisten peruslaskutoimitusten suorittaminen
 - **(tehty)** Funktioiden tallentaminen
 - **(tehty)** Muuttujien tallentaminen
-- Erityisemmät operaatiot, kuten derivointi tai yhtälöiden ratkaisu
+- Derivaattafunktion tallentaminen funktiosta
 
 ## Jatkokehitysideat
 
 - Kuvaajien tuottaminen
 - Funktioiden yhdistäminen
+- Yhtälöiden ratkaisu
