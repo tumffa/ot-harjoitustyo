@@ -6,6 +6,7 @@ Laskinsovellus, jolla pystyy suorittamaan matemaattisia lausekkeita komentorivil
 - [Changelog](./dokumentaatio/changelog.md)
 - [Tuntikirjanpito](./dokumentaatio/tyoaikakirjanpito.md)
 - [Arkkitehtuuri](./dokumentaatio/arkkitehtuuri.md)
+- [Käyttöohje](./dokumentaatio/kayttoohje.md)
 
 ## Asennusohjeet
 
