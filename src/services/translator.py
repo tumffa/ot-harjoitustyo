@@ -2,9 +2,21 @@ import math # pylint: disable=unused-import
 # math is used when using eval() on strings
 import random
 import string as s
+import sympy as sp
 
 class Translator:
+    """This class is used to handle and evaluate mathematical 
+        expressions and to store functions and variables
+
+    Attributes:
+        functions: dictionary of functions that can be used in expressions
+        variables: dictionary of variables that can be used in expressions
+    """
+
     def __init__(self):
+        """Initializes the class with default functions and variables
+        """
+
         # first value is what is evaluated in code
         # second value is user input / what is displayed with print
         self.functions = {
@@ -21,6 +33,15 @@ class Translator:
         }
 
     def calculate(self, string):
+        """Evaluates a mathematical expression
+
+        Args:
+            string: the expression to evaluate
+
+        Returns:
+            float/integer: the result of the expression if it is valid, else False
+        """
+
         string = string.replace("^", "**")
         # check for injection
         string = self.check_and_replace(string)
@@ -36,7 +57,17 @@ class Translator:
         return result
 
     def check_and_replace(self, string, keep=None):
-        # check for injection and replace given functions with actual functions
+        """Checks for injection and replaces functions and variables 
+            with the actual functions and variables
+
+        Args:
+            string: the expression to check
+            keep: a variable to keep in the expression
+
+        Returns:
+            string: the expression with functions and variables replaced
+            False: if the expression is invalid
+        """
         i = 0
         while i < len(string):
             if string[i].isalpha() or string[i] == '_':
@@ -62,6 +93,16 @@ class Translator:
         return string
 
     def add_function(self, function_name, function_string, variable):
+        """Adds a function to the functions dictionary
+
+        Args:
+            function_name: name of the function
+            function_string: the expression
+            variable: the variable used in the expression
+
+        Returns:
+            boolean: True if the function was added, False if the expression is invalid
+        """
         function_string = function_string.replace("^", "**")
         # check for injection
         function_string2 = self.check_and_replace(function_string, keep=variable)
@@ -78,6 +119,16 @@ class Translator:
         return True
 
     def add_variable(self, variable_name, variable_string):
+        """Adds a variable to the variables dictionary
+
+        Args:
+            variable_name: name of the variable
+            variable_string: the expression
+
+        Returns:
+            boolean: True if the variable was added, False if the expression is invalid
+        """
+
         variable_string = variable_string.replace("^", "**")
         # check for injection
         variable_string2 = self.check_and_replace(variable_string)
@@ -90,6 +141,15 @@ class Translator:
         return True
 
     def add_function_prompt(self, io):
+        """Prompts the user to add a function
+
+        Args:
+            io: ConsoleIO object
+        
+        Returns:
+            boolean: True if the function was added, False if the user cancels
+        """
+
         # prompt for function name
         io.write("\nEnter the name of the function, i.e. 'f_1' -- 'exit' to cancel")
         while True:
@@ -107,8 +167,6 @@ class Translator:
                 continue
             break
 
-        variable = 'x'
-
         # prompt for function
         io.write("\nEnter the function. I.e. 'x**2'")
         while True:
@@ -117,6 +175,7 @@ class Translator:
             function_string = io.read()
             if function_string == "exit":  # pragma: no cover
                 return False  # pragma: no cover
+            variable = 'x'
             if self.check_and_replace(function_string, keep=variable) is False:
                 io.write("Invalid function. Use expressions, functions, stored variables or 'x'\n")
                 continue
@@ -127,6 +186,15 @@ class Translator:
             io.write("Invalid expression\n")
 
     def add_variable_prompt(self, io):
+        """Prompts the user to add a variable
+
+        Args:
+            io: ConsoleIO object
+        
+        Returns:
+            boolean: True if the function was added, False if the user cancels
+        """
+
         # prompt for variable name
         io.write("\nEnter the name of the variable: -- 'exit' to cancel")
         while True:
@@ -161,7 +229,6 @@ class Translator:
                 return True
             io.write("Invalid expression\n")
 
-
     def print_functions(self, io):
         io.write("\n")
         for name, value in self.functions.items():
@@ -175,5 +242,44 @@ class Translator:
         io.write("\n")
 
     def check_available(self, name):
-        taken_names = [self.functions, self.variables, ['af', 'av', 'variables', 'functions']]
+        taken_names = [self.functions, self.variables, ['af', 'av', 'variables', 'functions', 'x']]
         return not any(name in names for names in taken_names)
+
+    def solve_equation_prompt(self, io):
+        """Prompts the user to solve an equation
+
+        Args:
+            io: ConsoleIO object
+
+        Returns:
+            list: list of the solutions to the equation
+            False: if the user cancels or the equation is invalid
+        """
+        io.write("\nEnter the equation to solve. I.e. '2*x + 3 = 0'")
+        while True:
+            if len(io.inputs) == 0:  # pragma: no cover
+                io.add_input("equation: ")  # pragma: no cover
+            equation = io.read()
+            if equation == "exit":
+                return False
+            if '=' not in equation:
+                io.write("Invalid equation. Use ' = ' to separate the left and right sides\n")
+                continue
+            break
+
+        equation = equation.replace("^", "**")
+
+        left, right = equation.split('=')
+        left = self.check_and_replace(left, keep='x')
+        right = self.check_and_replace(right, keep='x')
+
+        if left is False or right is False:
+            io.write("Invalid expression. Use only variable x and numbers\n")
+            return False
+        equation = f"({left}) - ({right})"
+
+        x = sp.symbols('x')
+        solution = sp.solve(sp.sympify(equation), x)
+
+        io.write(f"\nSolution: {solution}\n")
+        return True

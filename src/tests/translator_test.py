@@ -92,4 +92,4 @@ class TestTranslator(unittest.TestCase):
     def test_print_functions(self):
         io = ConsoleIO()
         self.translator.print_functions(io)
-        self.assertIn(f"   f: x + 2", io.outputs)
+        self.assertIn(f"   f(x): x + 2", io.outputs)

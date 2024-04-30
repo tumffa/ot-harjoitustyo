@@ -10,7 +10,9 @@ class ServiceHandler:
             "av": lambda: self.translator.add_variable_prompt(self.io),
             "variables": lambda: self.translator.print_variables(self.io),
             "functions": lambda: self.translator.print_functions(self.io),
+            "solve": lambda: self.translator.solve_equation_prompt(self.io),
             }
+
         self.info()
         while True:
             self.io.add_input("Command/expression: ", False)
@@ -34,6 +36,7 @@ class ServiceHandler:
         self.io.write("\n")
         self.io.write("    'af' - add a custom function\n")
         self.io.write("    'av' - store a value into a variable\n")
+        self.io.write("    'solve' - solve an equation\n")
         self.io.write("\n")
         self.io.write("    'variables' - print stored variables\n")
         self.io.write("    'functions' - print stored functions\n")
