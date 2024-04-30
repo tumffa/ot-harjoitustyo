@@ -19,7 +19,7 @@ Sinulla tulee olla asennettuna
 >
 >python "^3.8"
 
-Lataa [uusin release](https://github.com/tumffa/ot-harjoitustyo/releases/tag/viikko5) ja pura tiedosto
+Lataa release ylhäältä ja pura tiedosto
 
 Navigoi projektin juurihakemistoon ja suorita komento
 ```shell
