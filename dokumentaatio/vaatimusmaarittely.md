@@ -10,7 +10,7 @@ Sovelluksella käyttäjä pystyy tekemään erilaisia laskutoimituksia ja myös 
 - **(tehty)** Funktioiden tallentaminen
 - **(tehty)** Muuttujien tallentaminen
 - Yhtälöiden ratkaisu
-- 
+
 ## Jatkokehitysideat
 
 - Kuvaajien tuottaminen
