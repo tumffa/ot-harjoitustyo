@@ -32,6 +32,7 @@ class FunctionRepository:
             global_string: the global function name
             result: the lambda function to evaluate
         """
+
         self.functions[function_name] = Function(function_name,
                                                  global_string,
                                                  function_string,

@@ -61,6 +61,7 @@ class Translator:
             string: the expression with functions and variables replaced
             False: if the expression is invalid
         """
+
         functions = self.f_repo.get_functions()
         variables = self.v_repo.get_variables()
         i = 0

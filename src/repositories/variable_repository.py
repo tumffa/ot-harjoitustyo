@@ -11,6 +11,7 @@ class VariableRepository:
 
     def __init__(self, commands=None):
         """Initializes the repository with the given parameters"""
+
         if commands is None:
             commands = []
         self.commands = commands
@@ -38,6 +39,7 @@ class VariableRepository:
         Returns:
             tuple: (bool, str) where bool is True if the name is valid and not in use
         """
+
         taken_names = [self.variables, self.commands]
         if not name.isidentifier():
             return (False, "Invalid variable name. Enter name like 'var'\n")
