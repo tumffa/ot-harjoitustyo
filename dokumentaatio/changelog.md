@@ -22,3 +22,6 @@
 ## Viikko 6
 - Lisätty mahdollisuus ratkaista yksinkertaisia yhtälöjä
 - Docstring-kommentit
+
+## Viikko 7
+- Funktioiden ja muuttujien tietorakenteiden siirto omiin luokkiin
