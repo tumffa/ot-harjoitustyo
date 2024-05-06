@@ -197,6 +197,15 @@ class Translator:
         io.write("\n")
 
     def solve_equation_prompt(self, io):
+        """Prompts the user to solve an equation, prints solutions if valid
+
+        Args:
+            io: ConsoleIO object
+
+        Returns:
+            boolean: True if the equation was solved, False if the user cancels
+        """
+
         io.write("\nEnter the equation to solve. I.e. '2*x + 3 = 0'")
         while True:
             if len(io.inputs) == 0:  # pragma: no cover
