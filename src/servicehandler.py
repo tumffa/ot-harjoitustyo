@@ -1,10 +1,6 @@
 class ServiceHandler:
     def __init__(self, io, translator):
-        self.translator = translator
-        self.io = io
-
-    def run(self):
-        actions = {
+        self.actions = {
             "exit": lambda: "exit",
             "af": lambda: self.translator.add_function_prompt(self.io),
             "av": lambda: self.translator.add_variable_prompt(self.io),
@@ -12,14 +8,17 @@ class ServiceHandler:
             "functions": lambda: self.translator.print_functions(self.io),
             "solve": lambda: self.translator.solve_equation_prompt(self.io),
             }
+        self.translator = translator
+        self.io = io
 
+    def run(self):
         self.info()
         while True:
             self.io.add_input("Command/expression: ", False)
             input = self.io.read() # pylint: disable=redefined-builtin
             # built-in input is redefined to allow for easier testing
-            if input in actions:
-                result = actions[input]()
+            if input in self.actions:
+                result = self.actions[input]()
                 if result == "exit":
                     break
                 continue
