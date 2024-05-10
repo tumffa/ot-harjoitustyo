@@ -4,15 +4,9 @@
 
 Sovelluksella käyttäjä pystyy tekemään erilaisia laskutoimituksia ja myös monimutkaisempia operaatioita.
 
-## Suunnitellut toiminnallisuudet
+## Toiminnallisuudet
 
-- **(tehty)** Erilaisten peruslaskutoimitusten suorittaminen
-- **(tehty)** Funktioiden tallentaminen
-- **(tehty)** Muuttujien tallentaminen
-- **(tehty)** Yhtälöiden ratkaisu
-
-## Jatkokehitysideat
-
-- Kuvaajien tuottaminen
-- Funktioiden yhdistäminen
-- Derivaattafunktion tallentaminen funktiosta
+- Erilaisten peruslaskutoimitusten suorittaminen
+- Funktioiden tallentaminen
+- Muuttujien tallentaminen
+- Yhtälöiden ratkaisu
